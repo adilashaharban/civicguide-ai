@@ -2,15 +2,12 @@ import streamlit as st
 import google.generativeai as genai
 import os
 
-for m in genai.list_models():
-    if "generateContent" in m.supported_generation_methods:
-        st.write(m.name)
-        
+
 # 🔑 Load API key from Streamlit secrets
 genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
 
 # Load Gemini model
-model = genai.GenerativeModel("models/gemini-1.5-pro-latest")
+model = genai.GenerativeModel("models/gemini-flash-latest")
 
 # UI
 st.set_page_config(page_title="CivicGuide AI", page_icon="🗳️")
@@ -108,5 +105,8 @@ USER QUESTION:
 {user_input}
 """
 
-        response = model.generate_content(prompt)
-        st.markdown(response.text)
+        try:
+            response = model.generate_content(prompt)
+            st.markdown(response.text)
+        except Exception:
+            st.error("⚠️ AI service issue. Please try again.")
