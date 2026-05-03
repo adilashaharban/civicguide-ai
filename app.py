@@ -2,6 +2,10 @@ import streamlit as st
 import google.generativeai as genai
 import os
 
+for m in genai.list_models():
+    if "generateContent" in m.supported_generation_methods:
+        st.write(m.name)
+        
 # 🔑 Load API key from Streamlit secrets
 genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
 
