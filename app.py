@@ -2,25 +2,32 @@ import streamlit as st
 import google.generativeai as genai
 import os
 
-
-# 🔑 Load API key from Streamlit secrets
+# 🔑 API Key
 genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
 
-# Load Gemini model
+# 🤖 Model
 model = genai.GenerativeModel("models/gemini-flash-latest")
 
-# UI
+# 🧠 Chat memory (stored in session)
+if "chat_history" not in st.session_state:
+    st.session_state.chat_history = []
+
+# 🎨 UI
 st.set_page_config(page_title="CivicGuide AI", page_icon="🗳️")
 
 st.title("🗳️ CivicGuide AI")
-st.subheader("Ask anything about elections in India 🇮🇳")
+st.subheader("Understand Elections in India 🇮🇳")
 
-# ✅ ONLY ONE SELECTBOX (FIXED)
-topic = st.selectbox(
-    "Or choose a topic:",
-    ["None", "How elections work", "How to vote", "Eligibility", "Election timeline"],
-    key="topic_selector"
-)
+# ✅ Show dropdown ONLY before chat starts
+if len(st.session_state.chat_history) == 0:
+    topic = st.selectbox(
+        "Or choose a topic:",
+        ["None", "How elections work", "How to vote", "Eligibility", "Election timeline"],
+        key="topic_selector"
+    )
+else:
+    topic = "None"
+
 
 # ✅ SHOW CONTENT BASED ON SELECTION
 if topic == "How elections work":
@@ -73,40 +80,61 @@ elif topic == "Election timeline":
 ❓ Want to explore voting steps?
 """)
 
-# 💬 MAIN CHAT INPUT
-user_input = st.text_input("Ask anything about elections:")
+# 💬 Show chat history
+for role, msg in st.session_state.chat_history:
+    if role == "user":
+        st.markdown(f"**You:** {msg}")
+    else:
+        st.markdown(f"**CivicGuide AI:** {msg}")
+
+# 💬 Chat input (bottom)
+user_input = st.chat_input("Ask anything about elections...")
 
 if user_input:
+    # Save user message
+    st.session_state.chat_history.append(("user", user_input))
+
     with st.spinner("Thinking..."):
 
+        # 🧠 Build conversation context (last few messages)
+        history_text = ""
+        for role, msg in st.session_state.chat_history[-4:]:
+            history_text += f"{role}: {msg}\n"
+
         prompt = f"""
-You are CivicGuide AI, an interactive assistant that explains elections in India 🇮🇳.
+You are CivicGuide AI, an interactive assistant for Indian elections 🇮🇳.
 
 INSTRUCTIONS:
-- Explain in simple language (like teaching a beginner)
+- Continue conversation naturally
+- Understand follow-ups like "yes", "how?", "tell more"
+- Use previous context
+- Keep answers simple
 - Use bullet points (max 5)
-- Keep answers short and clear
-- Include Indian context when relevant:
-  - Election Commission of India
-  - Voter ID (EPIC)
-  - EVM voting system
 
 FORMAT:
-📌 Topic Title  
+📌 Topic  
 🔹 Point 1  
 🔹 Point 2  
-🔹 Point 3  
 
-💡 Tip: (1 helpful tip)
+💡 Tip  
 
-❓ End with a question to continue conversation
+❓ Ask next question
 
-USER QUESTION:
+CONVERSATION:
+{history_text}
+
+USER:
 {user_input}
 """
 
         try:
             response = model.generate_content(prompt)
-            st.markdown(response.text)
+            reply = response.text
+
+            # Save AI response
+            st.session_state.chat_history.append(("bot", reply))
+
+            st.rerun()
+
         except Exception:
             st.error("⚠️ AI service issue. Please try again.")
