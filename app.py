@@ -21,7 +21,60 @@ topic = st.selectbox(
 )
 
 if topic != "None":
-    st.info(f"You selected: {topic}")
+    topic = st.selectbox(
+    "Or choose a topic:",
+    ["None", "How elections work", "How to vote", "Eligibility", "Election timeline"]
+)
+
+if topic == "How elections work":
+    st.markdown("""
+📌 **Election Process**
+🔹 Voter Registration (Get Voter ID via Election Commission of India)  
+🔹 Political Campaigning  
+🔹 Voting using EVM machines  
+🔹 Vote Counting  
+🔹 Results Announcement  
+
+💡 Tip: Always verify your name in the voter list before election day.  
+❓ Want to learn how to register?
+""")
+
+elif topic == "How to vote":
+    st.markdown("""
+📌 **How to Vote**
+🔹 Carry your Voter ID (EPIC)  
+🔹 Visit your assigned polling booth  
+🔹 Verify identity  
+🔹 Cast vote using EVM  
+🔹 Confirm your vote  
+
+💡 Tip: Reach early to avoid long queues.  
+❓ Want to know eligibility criteria?
+""")
+
+elif topic == "Eligibility":
+    st.markdown("""
+📌 **Eligibility to Vote**
+🔹 Must be 18 years or older  
+🔹 Must be an Indian citizen  
+🔹 Must be registered with Election Commission of India  
+
+💡 Tip: Apply for Voter ID early to avoid delays.  
+❓ Want to learn how to register?
+""")
+
+elif topic == "Election timeline":
+    st.markdown("""
+📌 **Election Timeline**
+🔹 Election announcement  
+🔹 Campaign period  
+🔹 Voting day  
+🔹 Vote counting  
+🔹 Results declaration  
+
+💡 Tip: Follow official updates from Election Commission of India.  
+❓ Want to explore voting steps?
+""")
 
 # 💬 MAIN CHAT INPUT (THIS IS THE IMPORTANT PART)
 user_input = st.text_input("Ask anything about elections:")
