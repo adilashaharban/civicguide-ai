@@ -165,12 +165,15 @@ USER:
 
         try:
             response = model.generate_content(prompt)
-            reply = response.text
+
+            # ✅ Safe response handling
+            if response and hasattr(response, "text") and response.text:
+                reply = response.text
+            else:
+                reply = "⚠️ Sorry, I couldn't generate a response. Please try again."
 
             # Save AI response
             st.session_state.chat_history.append(("bot", reply))
 
-            st.rerun()
-
-        except Exception:
-            st.error("⚠️ AI service issue. Please try again.")
+        except Exception as e:
+            st.error(f"Error: {e}")
