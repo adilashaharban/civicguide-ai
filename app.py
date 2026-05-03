@@ -1,61 +1,60 @@
 import streamlit as st
+import google.generativeai as genai
+import os
 
+# 🔑 Load API key from Streamlit secrets
+genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
+
+# Load Gemini model
+model = genai.GenerativeModel("gemini-pro")
+
+# UI
 st.set_page_config(page_title="CivicGuide AI", page_icon="🗳️")
 
 st.title("🗳️ CivicGuide AI")
-st.subheader("Understand Elections in India — Step by Step 🇮🇳")
+st.subheader("Ask anything about elections in India 🇮🇳")
 
-menu = st.selectbox(
-    "Choose what you want to learn:",
-    ["How elections work", "How to vote", "Eligibility", "Election timeline"]
+# Optional: Quick selection (nice UX)
+topic = st.selectbox(
+    "Or choose a topic:",
+    ["None", "How elections work", "How to vote", "Eligibility", "Election timeline"]
 )
 
-if menu == "How elections work":
-    st.markdown("""
-📌 **Election Process**
-🔹 Voter Registration (Get Voter ID)  
-🔹 Political Campaigning  
-🔹 Voting using EVM  
-🔹 Vote Counting  
-🔹 Results Announcement  
+if topic != "None":
+    st.info(f"You selected: {topic}")
 
-💡 Tip: Always check your name in the voter list before voting.  
-❓ Want to learn how to register?
-""")
+# 💬 MAIN CHAT INPUT (THIS IS THE IMPORTANT PART)
+user_input = st.text_input("Ask anything about elections:")
 
-elif menu == "How to vote":
-    st.markdown("""
-📌 **How to Vote**
-🔹 Carry your Voter ID  
-🔹 Go to polling booth  
-🔹 Verify identity  
-🔹 Cast vote using EVM  
-🔹 Confirm vote  
+if user_input:
+    with st.spinner("Thinking..."):
 
-💡 Tip: Voting is your right — don’t skip it!  
-❓ Want eligibility details?
-""")
+        prompt = f"""
+You are CivicGuide AI, an interactive assistant that explains elections in India 🇮🇳.
 
-elif menu == "Eligibility":
-    st.markdown("""
-📌 **Eligibility**
-🔹 Must be 18+  
-🔹 Indian citizen  
-🔹 Registered voter  
+INSTRUCTIONS:
+- Explain in simple language (like teaching a beginner)
+- Use bullet points (max 5)
+- Keep answers short and clear
+- Include Indian context when relevant:
+  - Election Commission of India
+  - Voter ID (EPIC)
+  - EVM voting system
 
-💡 Tip: Apply early for your Voter ID.  
-❓ Want to know registration steps?
-""")
+FORMAT:
+📌 Topic Title  
+🔹 Point 1  
+🔹 Point 2  
+🔹 Point 3  
 
-elif menu == "Election timeline":
-    st.markdown("""
-📌 **Timeline**
-🔹 Election announcement  
-🔹 Campaign period  
-🔹 Voting day  
-🔹 Counting  
-🔹 Results  
+💡 Tip: (1 helpful tip)
 
-💡 Tip: Follow official updates from ECI.  
-❓ Want to explore voting steps?
-""")
+❓ End with a question to continue conversation
+
+USER QUESTION:
+{user_input}
+"""
+
+        response = model.generate_content(prompt)
+
+        st.markdown(response.text)
