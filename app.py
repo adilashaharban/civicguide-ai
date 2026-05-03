@@ -174,4 +174,7 @@ USER:
             st.session_state.chat_history.append(("bot", reply))
 
         except Exception as e:
-            st.error(f"Error: {e}")
+            if "429" in str(e) or "quota" in str(e).lower():
+                st.warning("⚠️ Daily AI limit reached. Please try again after some time.")
+            else:
+                st.error(f"Error: {e}")
