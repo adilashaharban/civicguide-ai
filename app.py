@@ -14,18 +14,14 @@ st.set_page_config(page_title="CivicGuide AI", page_icon="🗳️")
 st.title("🗳️ CivicGuide AI")
 st.subheader("Ask anything about elections in India 🇮🇳")
 
-# Optional: Quick selection (nice UX)
+# ✅ ONLY ONE SELECTBOX (FIXED)
 topic = st.selectbox(
     "Or choose a topic:",
-    ["None", "How elections work", "How to vote", "Eligibility", "Election timeline"]
+    ["None", "How elections work", "How to vote", "Eligibility", "Election timeline"],
+    key="topic_selector"
 )
 
-if topic != "None":
-    topic = st.selectbox(
-    "Or choose a topic:",
-    ["None", "How elections work", "How to vote", "Eligibility", "Election timeline"]
-)
-
+# ✅ SHOW CONTENT BASED ON SELECTION
 if topic == "How elections work":
     st.markdown("""
 📌 **Election Process**
@@ -76,7 +72,7 @@ elif topic == "Election timeline":
 ❓ Want to explore voting steps?
 """)
 
-# 💬 MAIN CHAT INPUT (THIS IS THE IMPORTANT PART)
+# 💬 MAIN CHAT INPUT
 user_input = st.text_input("Ask anything about elections:")
 
 if user_input:
@@ -109,5 +105,4 @@ USER QUESTION:
 """
 
         response = model.generate_content(prompt)
-
         st.markdown(response.text)
