@@ -43,7 +43,7 @@ header[data-testid="stHeader"] {
 
 </style>
 """, unsafe_allow_html=True)
-#st.title("🗳️ CivicGuide AI")
+st.title("🗳️ CivicGuide AI")
 st.subheader("Understand Elections in India 🇮🇳")
 
 # ✅ Show dropdown ONLY before chat starts
@@ -175,5 +175,12 @@ USER:
             # Save AI response
             st.session_state.chat_history.append(("bot", reply))
 
+<<<<<<< HEAD
         except Exception as e:
             st.error(f"Error: {e}")
+=======
+            st.rerun()
+
+        except Exception:
+            st.error("⚠️ AI service issue. Please try again.")
+>>>>>>> 3de1123844ee03e784271214ef93d741c0ccd912
