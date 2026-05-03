@@ -74,7 +74,7 @@ CivicGuide AI is a **chat-based assistant** that:
 ## ⚙️ Installation (Local Setup)
 
 ```bash
-git clone https://github.com/your-username/civicguide-ai.git
+git clone https://github.com/adilashaharban/civicguide-ai.git
 cd civicguide-ai
 pip install -r requirements.txt
 streamlit run app.py
