@@ -6,7 +6,7 @@ import os
 genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
 
 # Load Gemini model
-model = genai.GenerativeModel("gemini-pro")
+model = genai.GenerativeModel("gemini-1.5-flash")
 
 # UI
 st.set_page_config(page_title="CivicGuide AI", page_icon="🗳️")
