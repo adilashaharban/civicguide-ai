@@ -78,3 +78,7 @@ git clone https://github.com/your-username/civicguide-ai.git
 cd civicguide-ai
 pip install -r requirements.txt
 streamlit run app.py
+
+## 📄 License
+
+This project is licensed under the MIT License.
