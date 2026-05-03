@@ -14,23 +14,25 @@ if "chat_history" not in st.session_state:
 
 # 🎨 UI
 st.set_page_config(page_title="CivicGuide AI", page_icon="🗳️")
+
+# ✅ Sticky Header (SAFE)
 st.markdown("""
 <style>
-/* Sticky header container */
 .header {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
-    background: white;
+    background: var(--background-color);
+    color: var(--text-color);
     padding: 12px 20px;
     z-index: 9999;
-    border-bottom: 1px solid #eee;
-    font-size: 22px;
+    border-bottom: 1px solid rgba(128,128,128,0.2);
+    font-size: 20px;
     font-weight: 600;
 }
 
-/* Add space so content doesn't hide behind header */
+/* spacing fix */
 .block-container {
     padding-top: 80px;
 }
