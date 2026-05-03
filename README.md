@@ -5,7 +5,7 @@ An interactive AI assistant that helps users understand the **election process i
 ---
 
 ## 🚀 Live Demo
-🔗 [Add your Streamlit link here]
+🔗 [(https://civicguide-ai-bgbdrjvqrqtqcsrtqunwwk.streamlit.app/)]
 
 ---
 
