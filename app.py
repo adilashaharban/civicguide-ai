@@ -43,7 +43,7 @@ header[data-testid="stHeader"] {
 
 </style>
 """, unsafe_allow_html=True)
-#st.title("🗳️ CivicGuide AI")
+st.title("🗳️ CivicGuide AI")
 st.subheader("Understand Elections in India 🇮🇳")
 
 # ✅ Show dropdown ONLY before chat starts
