@@ -19,41 +19,29 @@ st.set_page_config(page_title="CivicGuide AI", page_icon="🗳️")
 st.markdown("""
 <style>
 
-/* Sticky top header */
-.custom-header {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    background-color: rgba(14,17,23,0.9); /* works in dark & light */
-    backdrop-filter: blur(6px);
-    color: white;
-    padding: 12px 20px;
-    z-index: 9999;
-    border-bottom: 1px solid rgba(255,255,255,0.1);
-    font-size: 20px;
+/* Target Streamlit top bar */
+header[data-testid="stHeader"] {
+    position: relative;
+}
+
+/* Add custom title inside top bar */
+header[data-testid="stHeader"]::before {
+    content: "🗳️ CivicGuide AI";
+    position: absolute;
+    left: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 18px;
     font-weight: 600;
+    color: inherit;
 }
 
-/* Light mode fix */
-@media (prefers-color-scheme: light) {
-    .custom-header {
-        background-color: rgba(255,255,255,0.9);
-        color: black;
-        border-bottom: 1px solid rgba(0,0,0,0.1);
-    }
-}
-
-/* Push content down so it's not hidden */
-.main .block-container {
-    padding-top: 80px;
+/* Optional: adjust spacing so it doesn't overlap */
+header[data-testid="stHeader"] {
+    padding-left: 180px;
 }
 
 </style>
-
-<div class="custom-header">
-🗳️ CivicGuide AI
-</div>
 """, unsafe_allow_html=True)
 #st.title("🗳️ CivicGuide AI")
 st.subheader("Understand Elections in India 🇮🇳")
