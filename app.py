@@ -14,8 +14,33 @@ if "chat_history" not in st.session_state:
 
 # 🎨 UI
 st.set_page_config(page_title="CivicGuide AI", page_icon="🗳️")
+st.markdown("""
+<style>
+/* Sticky header container */
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: white;
+    padding: 12px 20px;
+    z-index: 9999;
+    border-bottom: 1px solid #eee;
+    font-size: 22px;
+    font-weight: 600;
+}
 
-st.title("🗳️ CivicGuide AI")
+/* Add space so content doesn't hide behind header */
+.block-container {
+    padding-top: 80px;
+}
+</style>
+
+<div class="header">
+🗳️ CivicGuide AI
+</div>
+""", unsafe_allow_html=True)
+#st.title("🗳️ CivicGuide AI")
 st.subheader("Understand Elections in India 🇮🇳")
 
 # ✅ Show dropdown ONLY before chat starts
