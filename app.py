@@ -18,27 +18,40 @@ st.set_page_config(page_title="CivicGuide AI", page_icon="🗳️")
 # ✅ Sticky Header (SAFE)
 st.markdown("""
 <style>
-.header {
+
+/* Sticky top header */
+.custom-header {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
-    background: var(--background-color);
-    color: var(--text-color);
+    background-color: rgba(14,17,23,0.9); /* works in dark & light */
+    backdrop-filter: blur(6px);
+    color: white;
     padding: 12px 20px;
     z-index: 9999;
-    border-bottom: 1px solid rgba(128,128,128,0.2);
+    border-bottom: 1px solid rgba(255,255,255,0.1);
     font-size: 20px;
     font-weight: 600;
 }
 
-/* spacing fix */
-.block-container {
+/* Light mode fix */
+@media (prefers-color-scheme: light) {
+    .custom-header {
+        background-color: rgba(255,255,255,0.9);
+        color: black;
+        border-bottom: 1px solid rgba(0,0,0,0.1);
+    }
+}
+
+/* Push content down so it's not hidden */
+.main .block-container {
     padding-top: 80px;
 }
+
 </style>
 
-<div class="header">
+<div class="custom-header">
 🗳️ CivicGuide AI
 </div>
 """, unsafe_allow_html=True)
